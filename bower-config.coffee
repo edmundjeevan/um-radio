@@ -5,7 +5,9 @@ module.exports =
   jquery:
     version: "2.1.x"
     files:
+      "dist/jquery.js":                   "."
       "dist/jquery.min.js":               "."
+      "dist/jquery.min.map":              "."
 
   bootstrap:
     version: "3.1.x"
@@ -14,6 +16,20 @@ module.exports =
       "dist/css/bootstrap-theme.min.css": "css"
       "dist/fonts/*":                     "fonts"
       "dist/js/bootstrap.min.js":         "js"
+
+  angular:
+    version: "1.3.x"
+    files:
+      "angular.js":                       "."
+      "angular.min.js":                   "."
+      "angular.min.js.map":               "."
+
+  "angular-resource":
+    version: "1.3.x"
+    files:
+      "angular-resource.js":              "."
+      "angular-resource.min.js":          "."
+      "angular-resource.min.js.map":      "."
 
 #-------------------------------------------------------------------------------
 # Copyright IBM Corp. 2014

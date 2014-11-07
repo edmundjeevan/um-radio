@@ -1,8 +1,8 @@
 um-radio - user modelled radio
 ================================================================================
 
-`um-radio` is a web application that will allow you to change a [Last.fm](http://last.fm)
-radio station based on the user-modelling statistics from a [Twtter](https://twitter.com/)
+`um-radio` is a web application that will allow you to change a [8tracks](http://8tracks.com/)
+mix set based on the user-modelling statistics from a [Twtter](https://twitter.com/)
 feed.  It uses the
 [Watson User Modeling service](http://www.ibm.com/smarterplanet/us/en/ibmwatson/developercloud/doc/systemuapi/)
 available from Bluemix to determine what type of radio station to tune to.
@@ -14,8 +14,15 @@ provisioning services
 Before running the application, you will need to provision 3 services:
 
 * Twitter service
-* Last.fm service
+* 8tracks service
 * Watson User Modelling service
+
+To test locally, we'll be saving the credentials for these services in the files
+`env.json` and `vcap.json`.  You should create these files by copying the
+sample files `env-sample.json` and `vcap-sample.json`, respectively.  We'll
+be filling in the values in these files in this section.  The `env.json` and
+`vcap.json` files are listed in `.gitignore`, so they won't be saved to your
+git repo.
 
 For the Twitter service, follow the instructions at <https://apps.twitter.com/>
 to create a new application to use the Twitter API.  If you don't already have
@@ -27,11 +34,13 @@ unique hostname on the `mybluemix.net` domain.  You do not need to provide
 a Callback URL.
 
 After the new application is created at Twitter, navigate to the "Keys and
-Access Tokens" page.  You will be values "Consumer Key (API Key)" and
-"Consumer Secret (API Secret)" later.
+Access Tokens" page.  Fill in the values for the "Consumer Key (API Key)" and
+"Consumer Secret (API Secret)" in the `env.json` file.
 
-For the Last.fm service,
-
+For the 8tracks service, follow the instructions at
+<http://8tracks.com/developers/new> to register for an API key.  You will get
+a value for your new API key.  Fill in the value for the 8tracks API key in
+the `env.json` file.
 
 For the Watson User Modeling service,
 

@@ -6,7 +6,6 @@
 
   "TWITTER_CONSUMER_KEY":         "<twitter consumer key>",
   "TWITTER_CONSUMER_SECRET":      "<twitter consumer secret>",
-  "LASTFM_SOMETHING":             "<last.fm something>",
-  "LASTFM_SOMETHING":             "<last.fm something>",
-  "LASTFM_SOMETHING":             "<last.fm something>"
+
+  "8TRACKS_API_KEY":              "<8tracks api key>"
 }
