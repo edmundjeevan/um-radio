@@ -7,5 +7,5 @@
   "TWITTER_CONSUMER_KEY":         "<twitter consumer key>",
   "TWITTER_CONSUMER_SECRET":      "<twitter consumer secret>",
 
-  "8TRACKS_API_KEY":              "<8tracks api key>"
+  "TRACKS8_API_KEY":              "<8tracks api key>"
 }
