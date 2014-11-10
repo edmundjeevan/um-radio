@@ -1,6 +1,6 @@
 // Copyright IBM Corp. 2014 All Rights Reserved. See footer for details.
 
-return require("./lib/cli").run()
+return require("./lib/server").run()
 
 //------------------------------------------------------------------------------
 // Copyright IBM Corp. 2014

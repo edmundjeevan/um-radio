@@ -2,7 +2,7 @@
 
 <!-- Licensed under the Apache License. See footer for details. -->
 
-<html lang="en">
+<html lang="en" ng-app="um-radio">
 
 <!-- ======================================================================= -->
 <head>
@@ -11,7 +11,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="shortcut icon" href="images/icon.png" />
 
-  <title>User Modeled Radio</title>
+  <title>User-Modeled Radio</title>
 
   <link href="bower/bootstrap/css/bootstrap.min.css"       rel="stylesheet">
   <link href="bower/bootstrap/css/bootstrap-theme.min.css" rel="stylesheet">
@@ -27,21 +27,110 @@
 </head>
 
 <!-- ======================================================================= -->
-<body>
+<body ng-controller="BodyController">
 
   <div class="container-fluid">
 
     <div class="row">
       <div class="col-xs-12">
-        <div>User Modeled Radio!</div>
+          <h1>User-Modeled Radio</h1>
+          <p>Enter a twitter search string in the field below.  This will:
+
+          <ul>
+            <li>search for the relevant twitter messages
+            <li>score the messages with the Watson User Model service
+            <li>pick a mix to play from 8tracks based on the score
+          </ul>
+
+          <p>You can also click on the tweeter's icon to search for twitter
+            messages from that user.
       </div>
     </div>
 
-    <audio DONOTautoplay controls
-      src="https://api.soundcloud.com/tracks/45734051/stream?client_id=3904229f42df3999df223f6ebf39a8fe"
-      >
-      Your browser does not support the <code>audio</code> element.
-    </audio>
+    <div class="row">
+      <div class="col-xs-12">
+        <form role="form" ng-submit="twitterSearchEntered()">
+          <div class="form-group">
+            <label for="twitterSearchText">
+              Twitter Search
+              <a target="_blank" href="https://support.twitter.com/articles/71577-using-advanced-search">
+                <span class="glyphicon glyphicon-question-sign"</span>
+              </a>
+            </label>
+            <input
+              type="text" class="form-control"
+              ng-model="twitterSearchText" id="twitterSearchText"
+              placeholder="Enter a twitter search here"
+            >
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-xs-12">
+        <div class="panel panel-primary">
+          <div class="panel-heading"><strong>mix</strong></div>
+          <div class="panel-body">
+
+            <audio DONOTautoplay controls
+              src="https://api.soundcloud.com/tracks/45734051/stream?client_id=3904229f42df3999df223f6ebf39a8fe"
+            >
+              Your browser does not support the <code>audio</code> element.
+            </audio>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+
+      <div class="col-xs-12 col-sm-6">
+        <div class="panel panel-primary">
+          <div class="panel-heading"><strong>tweets</strong></div>
+          <div class="panel-body">
+            <div ng-if="tweetsMessage" class="alert alert-info" >
+              {{tweetsMessage}}
+            </div>
+            <table class="table table-striped">
+              <tr ng-repeat="tweet in tweets">
+                <td>
+                  <img width="64" height="64"
+                    ng-src="{{tweet.user.icon}}"
+                    ng-click="twitterSearchPerform(tweet.user.screen_name)"
+                  >
+                <td>{{tweet.text}}
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-xs-12 col-sm-6">
+        <div class="panel panel-primary">
+          <div class="panel-heading"><strong>user-model</strong></div>
+          <div class="panel-body">
+            <div ng-if="scoresMessage" class="alert alert-info" >
+              {{scoresMessage}}
+            </div>
+            <table class="table table-striped">
+              <tr ng-repeat="score in scores">
+                <td>{{score.score | number : 2}}
+                <td>{{score.name}}
+            </table>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="row">
+      <div class="col-xs-12">
+        <hr>
+        <p>
+        Powered by <a href="https://bluemix.net">Bluemix</a>.
+        Fork me at <a href="https://github.com/pmuellr/um-radio">github.com/pmuellr/um-radio</a>
+      </div>
+    </div>
 
   </div>
 
@@ -49,6 +138,9 @@
 <script src="bower/bootstrap/js/bootstrap.min.js"></script>
 <script src="bower/angular/angular.min.js"></script>
 <script src="bower/angular-resource/angular-resource.min.js"></script>
+<script src="scripts/twitter.js"></script>
+<script src="scripts/tracks.js"></script>
+<script src="scripts/user-model.js"></script>
 <script src="scripts/index.js"></script>
 
 <!-- ======================================================================= -->

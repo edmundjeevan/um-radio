@@ -1,96 +1,48 @@
 // Licensed under the Apache License. See footer for details.
 
-// /api/v1
-// /api/v1
-// /api/v1
-
-// /api/v1/tweets/.json
-// /api/v1/user-model.json
-// /api/v1/tracks.json
-
 var app = angular.module('um-radio', ['ngResource'])
 
-var search  = "PLT_Hulk"
-var url     = "/api/v1/tweets.json?q=" + encodeURIComponent(search)
-var options = {
-  dataType: "json",
-}
+app.controller("BodyController", BodyController)
 
-$.ajax(url, options).
-  done(gotTweets).
-  fail(gotTweetsError)
+//------------------------------------------------------------------------------
+function BodyController($scope, $timeout) {
+  $scope.timeout           = $timeout
 
-//-------------------------------------
-function gotTweets(data, textStatus, jqXHR) {
-  // console.log("gotTweets:")
-  // console.log("  data:       " + JSON.stringify(data))
-  // console.log("  textStatus: " + textStatus)
+  $scope.twitterSearchText = ""
+  $scope.mix               = null
 
-  getUserModel(data.data.join("\n\n"))
-}
+  clearSearch($scope)
 
-//-------------------------------------
-function gotTweetsError(jqXHR, textStatus, error) {
-  console.log("gotTweetsError:")
-  console.log("  textStatus: " + textStatus)
-  console.log("  error:      " + error)
+  $scope.twitterSearchEntered = function() { TwitterSearchEntered($scope) }
+  $scope.twitterSearchPerform = function(search) { TwitterSearchPerform($scope, search) }
 }
 
 //------------------------------------------------------------------------------
-function getUserModel(text) {
-  var url     = "/api/v1/user-model.json"
-  var options = {
-    contentType: "application/json",
-    dataType:    "json",
-    type:        "POST",
-    data:        JSON.stringify({data: text})
-  }
+function TwitterSearchEntered($scope) {
+  clearSearch($scope)
 
-  // console.log("getting user model: " + JSON.stringify(options))
-  $.ajax(url, options).
-    done(gotUserModel).
-    fail(gotUserModelError)
-}
-
-//-------------------------------------
-function gotUserModel(data, textStatus, jqXHR) {
-  console.log("gotUserModel:")
-  console.log("  data:       " + JSON.stringify(data))
-  console.log("  textStatus: " + textStatus)
-}
-
-//-------------------------------------
-function gotUserModelError(jqXHR, textStatus, error) {
-  console.log("gotUserModelError:")
-  console.log("  textStatus: " + textStatus)
-  console.log("  error:      " + error)
+  TwitterGetTweets($scope, $scope.twitterSearchText)
 }
 
 //------------------------------------------------------------------------------
-var search  = "4843418"
-var url     = "/api/v1/tracks.json?q=" + encodeURIComponent(search)
-var options = {
-  dataType: "json",
+function TwitterSearchPerform($scope, search) {
+  clearSearch($scope)
+
+  search = "from: " + search
+
+  $scope.twitterSearchText = search
+
+  TwitterGetTweets($scope, search)
 }
 
-$.ajax(url, options).
-  done(gotTracks).
-  fail(gotTracksError)
+//------------------------------------------------------------------------------
+function clearSearch($scope) {
+  $scope.tweets            = []
+  $scope.scores            = []
 
-//-------------------------------------
-function gotTracks(data, textStatus, jqXHR) {
-  console.log("gotTracks:")
-  console.log("  data:       " + JSON.stringify(data))
-  console.log("  textStatus: " + textStatus)
+  $scope.tweetsMessage     = null
+  $scope.scoresMessage     = null
 }
-
-//-------------------------------------
-function gotTracksError(jqXHR, textStatus, error) {
-  console.log("gotTracksError:")
-  console.log("  textStatus: " + textStatus)
-  console.log("  error:      " + error)
-}
-
 
 //------------------------------------------------------------------------------
 // Copyright IBM Corp. 2014

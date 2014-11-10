@@ -1,25 +1,25 @@
 // Licensed under the Apache License. See footer for details.
 
-var config = require("./config")
-var utils  = require("./utils")
-var server = require("./server")
+function TracksGetTracks($scope, search) {
 
-//------------------------------------------------------------------------------
-var cli = exports
+  //-------------------------------------
+  function gotTracks(data, textStatus, jqXHR) {
+    console.log("gotTracks:")
+    console.log("  data:       " + JSON.stringify(data))
+    console.log("  textStatus: " + textStatus)
 
-cli.run = run
 
-//------------------------------------------------------------------------------
-if (require.main == module) cli.run()
+  }
 
-//------------------------------------------------------------------------------
-function run(args) {
-  var cfg = config.getConfig()
+  //-------------------------------------
+  function gotTracksError(jqXHR, textStatus, error) {
+    var message = "error getting user-model: " + textStatus + ": " + error
+    alert(message)
+  }
 
-  utils.log("config: " + JSON.stringify(cfg, null, 4))
-
-  server.run(cfg)
 }
+
+//------------------------------------------------------------------------------
 
 //------------------------------------------------------------------------------
 // Copyright IBM Corp. 2014
