@@ -10,7 +10,7 @@
 
 var app = angular.module('um-radio', ['ngResource'])
 
-var search  = "@pmuellr"
+var search  = "PLT_Hulk"
 var url     = "/api/v1/tweets.json?q=" + encodeURIComponent(search)
 var options = {
   dataType: "json",
@@ -22,9 +22,11 @@ $.ajax(url, options).
 
 //-------------------------------------
 function gotTweets(data, textStatus, jqXHR) {
-  console.log("gotTweetsError:")
-  console.log("  data:       " + data)
-  console.log("  textStatus: " + textStatus)
+  // console.log("gotTweets:")
+  // console.log("  data:       " + JSON.stringify(data))
+  // console.log("  textStatus: " + textStatus)
+
+  getUserModel(data.data.join("\n\n"))
 }
 
 //-------------------------------------
@@ -34,6 +36,35 @@ function gotTweetsError(jqXHR, textStatus, error) {
   console.log("  error:      " + error)
 }
 
+//------------------------------------------------------------------------------
+function getUserModel(text) {
+  var url     = "/api/v1/user-model.json"
+  var options = {
+    contentType: "application/json",
+    dataType:    "json",
+    type:        "POST",
+    data:        JSON.stringify({data: text})
+  }
+
+  // console.log("getting user model: " + JSON.stringify(options))
+  $.ajax(url, options).
+    done(gotUserModel).
+    fail(gotUserModelError)
+}
+
+//-------------------------------------
+function gotUserModel(data, textStatus, jqXHR) {
+  console.log("gotUserModel:")
+  console.log("  data:       " + JSON.stringify(data))
+  console.log("  textStatus: " + textStatus)
+}
+
+//-------------------------------------
+function gotUserModelError(jqXHR, textStatus, error) {
+  console.log("gotUserModelError:")
+  console.log("  textStatus: " + textStatus)
+  console.log("  error:      " + error)
+}
 
 //------------------------------------------------------------------------------
 var search  = "4843418"
@@ -48,8 +79,8 @@ $.ajax(url, options).
 
 //-------------------------------------
 function gotTracks(data, textStatus, jqXHR) {
-  console.log("gotTracksError:")
-  console.log("  data:       " + data)
+  console.log("gotTracks:")
+  console.log("  data:       " + JSON.stringify(data))
   console.log("  textStatus: " + textStatus)
 }
 
@@ -59,6 +90,7 @@ function gotTracksError(jqXHR, textStatus, error) {
   console.log("  textStatus: " + textStatus)
   console.log("  error:      " + error)
 }
+
 
 //------------------------------------------------------------------------------
 // Copyright IBM Corp. 2014
