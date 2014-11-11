@@ -42,6 +42,7 @@ function clearSearch($scope) {
 
   $scope.tweetsMessage     = null
   $scope.scoresMessage     = null
+  $scope.mixMessage        = null
 }
 
 //------------------------------------------------------------------------------

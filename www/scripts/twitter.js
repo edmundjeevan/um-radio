@@ -52,7 +52,9 @@ function TwitterGetTweets($scope, search) {
   function gotTweetsError(jqXHR, textStatus, error) {
     var message = "error getting tweets: " + textStatus + ": " + error
 
-    $scope.tweetsMessage = message
+    $scope.timeout(function(){
+      $scope.tweetsMessage = message
+    }, 10)
   }
 
 }

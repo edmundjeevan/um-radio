@@ -1,20 +1,38 @@
 // Licensed under the Apache License. See footer for details.
 
 function TracksGetTracks($scope, search) {
+  var url     = "/api/v1/tracks.json?q=" + encodeURIComponent(search)
+  var options = {
+    dataType: "json",
+  }
+
+  $scope.mixMessage = "loading 8tracks mix: " + search
+
+  $.ajax(url, options).
+    done(gotMix).
+    fail(gotMixError)
 
   //-------------------------------------
-  function gotTracks(data, textStatus, jqXHR) {
-    console.log("gotTracks:")
+  function gotMix(data, textStatus, jqXHR) {
+    console.log("gotMix:")
     console.log("  data:       " + JSON.stringify(data))
     console.log("  textStatus: " + textStatus)
 
+    $scope.timeout(function(){
+      $scope.mixMessage = null
+      $scope.mix = data.data
+    }, 10)
 
   }
 
   //-------------------------------------
-  function gotTracksError(jqXHR, textStatus, error) {
-    var message = "error getting user-model: " + textStatus + ": " + error
-    alert(message)
+  function gotMixError(jqXHR, textStatus, error) {
+    var message = "error getting 8tracks mix: " + textStatus + ": " + error
+
+    $scope.timeout(function(){
+      $scope.mixMessage = message
+    }, 10)
+
   }
 
 }

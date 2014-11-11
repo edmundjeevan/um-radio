@@ -35,13 +35,21 @@ function UserModelGetUserModel($scope, text) {
         $scope.scoresMessage = null
 
       $scope.scores = scores
+
+      if (scores.length > 0) {
+        var tag = UserModel2Tracks8(scores[0].name)
+        TracksGetTracks($scope, tag)
+      }
     }, 10)
   }
 
   //-------------------------------------
   function gotUserModelError(jqXHR, textStatus, error) {
     var message = "error getting user-model: " + textStatus + ": " + error
-    $scope.scoresMessage = message
+
+    $scope.timeout(function(){
+      $scope.scoresMessage = message
+    }, 10)
   }
 
   //-------------------------------------
