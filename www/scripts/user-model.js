@@ -28,7 +28,7 @@ function UserModelGetUserModel($scope, text) {
       return (a.name < b.name) ? -1 : 1
     })
 
-    $scope.timeout(function(){
+    $scope.inAng("gotUserModel", function(){
       if (scores.length == 0)
         $scope.message = "no scores available"
       else
@@ -40,16 +40,16 @@ function UserModelGetUserModel($scope, text) {
         var tag = UserModel2Tracks8(scores[0].name)
         TracksGetTracks($scope, tag)
       }
-    }, 10)
+    })
   }
 
   //-------------------------------------
   function gotUserModelError(jqXHR, textStatus, error) {
     var message = "error getting user-model: " + textStatus + ": " + error
 
-    $scope.timeout(function(){
+    $scope.inAng("gotUserModelError", function(){
       $scope.message = message
-    }, 10)
+    })
   }
 
   //-------------------------------------
@@ -65,7 +65,6 @@ function UserModelGetUserModel($scope, text) {
       getChildScores(scores, ch)
     })
   }
-
 }
 
 //------------------------------------------------------------------------------

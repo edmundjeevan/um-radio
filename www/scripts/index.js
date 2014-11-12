@@ -17,9 +17,19 @@ function BodyController($scope, $timeout, $sce) {
 
   clearSearch($scope)
 
-  $scope.toggleHelp           = function() { ToggleHelp($scope) }
-  $scope.twitterSearchEntered = function() { TwitterSearchEntered($scope) }
+  $scope.toggleHelp           = function()       { ToggleHelp($scope) }
+  $scope.twitterSearchEntered = function()       { TwitterSearchEntered($scope) }
   $scope.twitterSearchPerform = function(search) { TwitterSearchPerform($scope, search) }
+
+  //-----------------------------------
+  $scope.inAng = function(label, fn) {
+    // console.log("@ ang block: " + label)
+    $scope.timeout(function() {
+      // console.log("-> ang block: " + label)
+      fn()
+      // console.log("<- ang block: " + label)
+    },1)
+  }
 }
 
 //------------------------------------------------------------------------------
@@ -29,13 +39,19 @@ function ToggleHelp($scope) {
 
 //------------------------------------------------------------------------------
 function TwitterSearchEntered($scope) {
+  console.log("in TwitterSearchEntered()")
   clearSearch($scope)
+
+  $scope.inAng("twitterSearchEntered", function(){
+    $("#twitterSearchText").blur()
+  })
 
   TwitterGetTweets($scope, $scope.twitterSearchText)
 }
 
 //------------------------------------------------------------------------------
 function TwitterSearchPerform($scope, search) {
+  console.log("in TwitterSearchPerform()")
   clearSearch($scope)
 
   $scope.twitterSearchText = search
@@ -45,12 +61,8 @@ function TwitterSearchPerform($scope, search) {
 
 //------------------------------------------------------------------------------
 function clearSearch($scope) {
-  $scope.tweets            = []
-  $scope.scores            = []
-
-  $scope.tweetsMessage     = null
-  $scope.scoresMessage     = null
-  $scope.mixMessage        = null
+  $scope.tweets = []
+  $scope.scores = []
 }
 
 //------------------------------------------------------------------------------

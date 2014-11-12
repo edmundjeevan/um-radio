@@ -8,7 +8,7 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <link rel="shortcut icon" href="images/icon.png" />
 
   <title>User-Modeled Radio</title>
@@ -33,11 +33,12 @@
 
     <div class="row">
       <div class="col-xs-12">
-        <h1>
+        <h2>
           User-Modeled Radio
           <span class="label label-warning" ng-bind="message"></span>
-          <span class="pull-right glyphicon glyphicon-question-sign" data-toggle="modal" data-target="#showHelp"></span>
-        </h1>
+          <span ng-if="!message" class="pull-right glyphicon glyphicon-question-sign" data-toggle="modal" data-target="#showHelp">
+          </span>
+        </h2>
       </div>
     </div>
 
@@ -65,19 +66,20 @@
         <div class="panel panel-primary">
           <div class="panel-heading"><strong>mix</strong></div>
           <div class="panel-body">
+            <audio id="track-player" autoplay="{{!!mix}}" controls ng-src="{{mix.audio}}">
+              Sorry, your browser does not support the <code>audio</code> element.
+            </audio>
+            <p>
             <table>
               <tr>
                 <td valign="top">
                   <img width=100 height=100 ng-src="{{mix.image}}">
-
-                <td>&nbsp;
+                <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                 <td valign="top">
-                  <audio autoplay controls
-                    ng-src="{{mix.audio}}"
-                  >
-                    Your browser does not support the <code>audio</code> element.
-                  </audio>
-                  <h3><a href="{{mix.url}}">{{mix.name + " "}}</a>&nbsp;</h3>
+                  <h3><a href="{{mix.url}}" ng-bind="mix.name"></a></h3>
+                  <div ng-if="mix">
+                    tag: <i><span ng-bind="mix.tag"></span></i>
+                  </div>
             </table>
           </div>
         </div>
@@ -121,45 +123,46 @@
     <div class="row">
       <div class="col-xs-12">
         <hr>
-        <p>
-        Powered by <a href="https://bluemix.net">Bluemix</a>.
-        Fork me at <a href="https://github.com/pmuellr/um-radio">github.com/pmuellr/um-radio</a>
+        <p>Powered by
+          <a href="https://bluemix.net">Bluemix</a>.
+        <p>Fork me at
+          <a href="https://github.com/pmuellr/um-radio">github.com/pmuellr/um-radio</a>
       </div>
     </div>
 
-  </div>
+    <div class="row">
+      <div class="modal fade" id="showHelp" tabindex="-1" role="dialog" aria-labelledby="showHelpTitle" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">close</span></button>
+              <h4 class="modal-title" id="showHelpTitle">help</h4>
+            </div>
+            <div class="modal-body">
+              <p>Enter a twitter search string in entry field.  This will:
 
-  <div class="modal fade" id="showHelp" tabindex="-1" role="dialog" aria-labelledby="showHelpTitle" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">close</span></button>
-          <h4 class="modal-title" id="showHelpTitle">help</h4>
-        </div>
-        <div class="modal-body">
-          <p>Enter a twitter search string in entry field.  This will:
+              <ul>
+                <li>search for the relevant <a target="_blank" href="https://twitter.com">twitter</a> messages
+                <li>score the messages with the <a target="_blank" href="http://www.ibm.com/smarterplanet/us/en/ibmwatson/developercloud/user-modeling.html">Watson User Modeling</a> service
+                <li>pick a mix to play from <a target="_blank" href="https://8tracks.com/">8tracks</a> based on the score
+                <li>play the first song of the mix
+              </ul>
 
-          <ul>
-            <li>search for the relevant <a target="_blank" href="https://twitter.com">twitter</a> messages
-            <li>score the messages with the <a target="_blank" href="http://www.ibm.com/smarterplanet/us/en/ibmwatson/developercloud/user-modeling.html">Watson User Modeling</a> service
-            <li>pick a mix to play from <a target="_blank" href="https://8tracks.com/">8tracks</a> based on the score
-            <li>play the first song of the mix
-          </ul>
+              <p>If you like the mix, click on the title underneath the audio player
+                to see the whole set at 8tracks.
+              <p>You can also click on the tweeter's icon to search for twitter
+                messages from that user.
 
-          <p>If you like the mix, click on the title underneath the audio player
-            to see the whole set at 8tracks.
-          <p>You can also click on the tweeter's icon to search for twitter
-            messages from that user.
-
-          <p>Twitter has a fairly rich syntax for searches; see the
-            <a target="_blank" href="https://support.twitter.com/articles/71577-using-advanced-search">
-              Twitter online help on advanced search
-            </a> for more information
+              <p>Twitter has a fairly rich syntax for searches; see the
+                <a target="_blank" href="https://support.twitter.com/articles/71577-using-advanced-search">
+                  Twitter online help on advanced search
+                </a> for more information
+            </div>
+          </div>
         </div>
       </div>
     </div>
   </div>
-
 
 <script src="bower/jquery/jquery.min.js"></script>
 <script src="bower/bootstrap/js/bootstrap.min.js"></script>

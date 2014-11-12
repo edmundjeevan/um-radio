@@ -14,20 +14,6 @@ function TwitterGetTweets($scope, search) {
 
   //-------------------------------------
   function gotTweets(data, textStatus, jqXHR) {
-    // console.log("gotTweets:")
-    // console.log("  data:       " + JSON.stringify(data))
-    // console.log("  textStatus: " + textStatus)
-
-  //        text:       status.text,
-  //        created_at: status.created_at,
-  //        user: {
-  //          name:     status.user.name,
-  //          icon:     status.user.profile_image_url_https
-  //        }
-
-    // console.log(JSON.stringify(data, null, 4))
-
-
     var text = []
     data.data.forEach(function(status) {
       text.push(status.text)
@@ -35,31 +21,28 @@ function TwitterGetTweets($scope, search) {
 
     text = text.join("\n\n")
 
-    $scope.timeout(function(){
-      if (data.data.length == 0)
-        $scope.message = "no tweets found"
-      else
-        $scope.message = null
-
+    $scope.inAng("gotTweets", function(){
       $scope.tweets = data.data
 
-      if (data.data.length != 0)
+      if (data.data.length == 0)
+        $scope.message = "no tweets found"
+      else {
+        $scope.message = null
         UserModelGetUserModel($scope, text)
-    }, 10)
+      }
+    })
   }
 
   //-------------------------------------
   function gotTweetsError(jqXHR, textStatus, error) {
     var message = "error getting tweets: " + textStatus + ": " + error
 
-    $scope.timeout(function(){
+    $scope.inAng("gotTweetsError", function(){
       $scope.message = message
-    }, 10)
+    })
   }
 
 }
-
-//------------------------------------------------------------------------------
 
 //------------------------------------------------------------------------------
 // Copyright IBM Corp. 2014

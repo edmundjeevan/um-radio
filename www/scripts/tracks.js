@@ -14,31 +14,23 @@ function TracksGetTracks($scope, search) {
 
   //-------------------------------------
   function gotMix(data, textStatus, jqXHR) {
-    console.log("gotMix:")
-    console.log("  data:       " + JSON.stringify(data))
-    console.log("  textStatus: " + textStatus)
-
-    $scope.timeout(function(){
-      $scope.message = null
-      $scope.mix = data.data
+    $scope.inAng("gotMix", function(){
+      $scope.message   = null
+      $scope.mix       = data.data
       $scope.mix.audio = $scope.sce.trustAsResourceUrl($scope.mix.audio)
-    }, 10)
-
+    })
   }
 
   //-------------------------------------
   function gotMixError(jqXHR, textStatus, error) {
     var message = "error getting 8tracks mix: " + textStatus + ": " + error
 
-    $scope.timeout(function(){
+    $scope.inAng("gotMixError", function(){
       $scope.message = message
-    }, 10)
-
+    })
   }
 
 }
-
-//------------------------------------------------------------------------------
 
 //------------------------------------------------------------------------------
 // Copyright IBM Corp. 2014
