@@ -1,13 +1,24 @@
 // Licensed under the Apache License. See footer for details.
 
-var app = angular.module('um-radio', ['ngResource'])
+var DefaultSearch = "Sad_Worker"
+
+var app = angular.module("um-radio", ["ngResource"])
+
+app.config(function($locationProvider) {
+  $locationProvider.html5Mode({
+    enabled:     true,
+    requireBase: false
+  })
+})
 
 app.controller("BodyController", BodyController)
 
 //------------------------------------------------------------------------------
-function BodyController($scope, $timeout, $sce) {
+function BodyController($scope, $rootScope, $timeout, $sce, $location) {
+
   $scope.timeout           = $timeout
   $scope.sce               = $sce
+  $scope.loc               = $location
 
   $scope.helpShown         = false
   $scope.message           = null
@@ -17,9 +28,27 @@ function BodyController($scope, $timeout, $sce) {
 
   clearSearch($scope)
 
-  $scope.toggleHelp           = function()       { ToggleHelp($scope) }
-  $scope.twitterSearchEntered = function()       { TwitterSearchEntered($scope) }
-  $scope.twitterSearchPerform = function(search) { TwitterSearchPerform($scope, search) }
+  var q = $scope.loc.search().q
+  if (!q) {
+    $scope.loc.search({q: DefaultSearch})
+  }
+
+  //-----------------------------------
+  $rootScope.$on("$locationChangeSuccess", function(){
+    LocationChanged($scope)
+  })
+
+  $scope.toggleHelp = function() {
+    ToggleHelp($scope)
+  }
+
+  $scope.twitterSearchEntered = function() {
+    TwitterSearchEntered($scope)
+  }
+
+  $scope.twitterSearchPerform = function(search) {
+    TwitterSearchPerform($scope, search)
+  }
 
   //-----------------------------------
   $scope.inAng = function(label, fn) {
@@ -33,25 +62,31 @@ function BodyController($scope, $timeout, $sce) {
 }
 
 //------------------------------------------------------------------------------
+function LocationChanged($scope) {
+  var q = $scope.loc.search().q || DefaultSearch
+
+  TwitterSearchPerform($scope, q)
+}
+
+//------------------------------------------------------------------------------
 function ToggleHelp($scope) {
   $scope.helpShown = !$scope.helpShown
 }
 
 //------------------------------------------------------------------------------
 function TwitterSearchEntered($scope) {
-  console.log("in TwitterSearchEntered()")
   clearSearch($scope)
 
   $scope.inAng("twitterSearchEntered", function(){
     $("#twitterSearchText").blur()
   })
 
-  TwitterGetTweets($scope, $scope.twitterSearchText)
+  $scope.loc.search({q: $scope.twitterSearchText})
 }
 
 //------------------------------------------------------------------------------
 function TwitterSearchPerform($scope, search) {
-  console.log("in TwitterSearchPerform()")
+  search = search || DefaultSearch
   clearSearch($scope)
 
   $scope.twitterSearchText = search

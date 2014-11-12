@@ -95,10 +95,11 @@
             <table class="table table-striped">
               <tr ng-repeat="tweet in tweets">
                 <td>
-                  <img width="64" height="64"
-                    ng-src="{{tweet.user.icon}}"
-                    ng-click="twitterSearchPerform(tweet.user.screen_name)"
-                  >
+                  <a ng-href="?q={{tweet.user.screen_name}}">
+                    <img width="64" height="64"
+                      ng-src="{{tweet.user.icon}}"
+                    >
+                  </a>
                 <td>{{tweet.text}}
             </table>
           </div>
@@ -172,6 +173,7 @@
 <script src="bower/bootstrap/js/bootstrap.min.js"></script>
 <script src="bower/angular/angular.min.js"></script>
 <script src="bower/angular-resource/angular-resource.min.js"></script>
+<script src="bower/angular-route/angular-route.min.js"></script>
 <script src="scripts/twitter.js"></script>
 <script src="scripts/tracks.js"></script>
 <script src="scripts/user-model.js"></script>

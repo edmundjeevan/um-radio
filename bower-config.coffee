@@ -31,6 +31,13 @@ module.exports =
       "angular-resource.min.js":          "."
       "angular-resource.min.js.map":      "."
 
+  "angular-route":
+    version: "1.3.x"
+    files:
+      "angular-route.js":                 "."
+      "angular-route.min.js":             "."
+      "angular-route.min.js.map":         "."
+
 #-------------------------------------------------------------------------------
 # Copyright IBM Corp. 2014
 #
