@@ -30,7 +30,7 @@ function BodyController($scope, $rootScope, $timeout, $sce, $location) {
 
   var q = $scope.loc.search().q
   if (!q) {
-    $scope.loc.search({q: DefaultSearch})
+    $scope.loc.search({q: getDefaultSearch()})
   }
 
   //-----------------------------------
@@ -63,7 +63,7 @@ function BodyController($scope, $rootScope, $timeout, $sce, $location) {
 
 //------------------------------------------------------------------------------
 function LocationChanged($scope) {
-  var q = $scope.loc.search().q || DefaultSearch
+  var q = $scope.loc.search().q || getDefaultSearch()
 
   TwitterSearchPerform($scope, q)
 }
@@ -86,7 +86,9 @@ function TwitterSearchEntered($scope) {
 
 //------------------------------------------------------------------------------
 function TwitterSearchPerform($scope, search) {
-  search = search || DefaultSearch
+  search = search || getDefaultSearch()
+  setDefaultSearch(search)
+
   clearSearch($scope)
 
   $scope.twitterSearchText = search
@@ -98,6 +100,21 @@ function TwitterSearchPerform($scope, search) {
 function clearSearch($scope) {
   $scope.tweets = []
   $scope.scores = []
+}
+
+//------------------------------------------------------------------------------
+function getDefaultSearch() {
+  if (!window.localStorage) return DefaultSearch
+
+  return window.localStorage.umRadioDefaultSearch || DefaultSearch
+}
+
+//------------------------------------------------------------------------------
+function setDefaultSearch(value) {
+  if (!window.localStorage) return
+
+  window.localStorage.umRadioDefaultSearch = value
+
 }
 
 //------------------------------------------------------------------------------
