@@ -50,7 +50,7 @@ Once you have that in order:
 
 * create a git clone this repository; eg,
 
-      git clone https://github.com/pmuellr/um-radio.git
+        git clone https://github.com/pmuellr/um-radio.git
 
 * run `npm install` to install node pre-req modules
 
@@ -62,19 +62,19 @@ Once you have that in order:
 
 * create the app at Bluemix, without starting it, with the command
 
-      cf push --no-start
+        cf push --no-start
 
 * create the Watson User Modeling service, with the command
 
-      cf create-service user_modeling user_modeling_free_plan watson-um
+        cf create-service user_modeling user_modeling_free_plan watson-um
 
 * bind the Watson User Modeling service to the app, with the command
 
-      cf bind-service um-radio watson-um
+        cf bind-service um-radio watson-um
 
 * get the credentials for the Watson User Modeling service, by using the command
 
-      cf env um-radio
+        cf env um-radio
 
   The `password`, `url`, and `username` properties are the credentials for
   the service.
