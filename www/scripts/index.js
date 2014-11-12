@@ -38,8 +38,6 @@ function TwitterSearchEntered($scope) {
 function TwitterSearchPerform($scope, search) {
   clearSearch($scope)
 
-  search = "from: " + search
-
   $scope.twitterSearchText = search
 
   TwitterGetTweets($scope, search)
