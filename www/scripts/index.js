@@ -1,6 +1,6 @@
 // Licensed under the Apache License. See footer for details.
 
-var DefaultSearch = "Sad_Worker"
+var DefaultSearch = "Promoted_Worker"
 
 var app = angular.module("um-radio", ["ngResource"])
 
