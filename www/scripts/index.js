@@ -5,16 +5,26 @@ var app = angular.module('um-radio', ['ngResource'])
 app.controller("BodyController", BodyController)
 
 //------------------------------------------------------------------------------
-function BodyController($scope, $timeout) {
+function BodyController($scope, $timeout, $sce) {
   $scope.timeout           = $timeout
+  $scope.sce               = $sce
+
+  $scope.helpShown         = false
+  $scope.message           = null
 
   $scope.twitterSearchText = ""
   $scope.mix               = null
 
   clearSearch($scope)
 
+  $scope.toggleHelp           = function() { ToggleHelp($scope) }
   $scope.twitterSearchEntered = function() { TwitterSearchEntered($scope) }
   $scope.twitterSearchPerform = function(search) { TwitterSearchPerform($scope, search) }
+}
+
+//------------------------------------------------------------------------------
+function ToggleHelp($scope) {
+  $scope.helpShown = !$scope.helpShown
 }
 
 //------------------------------------------------------------------------------

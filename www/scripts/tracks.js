@@ -6,7 +6,7 @@ function TracksGetTracks($scope, search) {
     dataType: "json",
   }
 
-  $scope.mixMessage = "loading 8tracks mix: " + search
+  $scope.message = "loading 8tracks mix: " + search
 
   $.ajax(url, options).
     done(gotMix).
@@ -19,8 +19,9 @@ function TracksGetTracks($scope, search) {
     console.log("  textStatus: " + textStatus)
 
     $scope.timeout(function(){
-      $scope.mixMessage = null
+      $scope.message = null
       $scope.mix = data.data
+      $scope.mix.audio = $scope.sce.trustAsResourceUrl($scope.mix.audio)
     }, 10)
 
   }
@@ -30,7 +31,7 @@ function TracksGetTracks($scope, search) {
     var message = "error getting 8tracks mix: " + textStatus + ": " + error
 
     $scope.timeout(function(){
-      $scope.mixMessage = message
+      $scope.message = message
     }, 10)
 
   }

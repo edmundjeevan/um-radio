@@ -6,7 +6,7 @@ function TwitterGetTweets($scope, search) {
     dataType: "json",
   }
 
-  $scope.tweetsMessage = "loading tweets"
+  $scope.message = "loading tweets"
 
   $.ajax(url, options).
     done(gotTweets).
@@ -37,9 +37,9 @@ function TwitterGetTweets($scope, search) {
 
     $scope.timeout(function(){
       if (data.data.length == 0)
-        $scope.tweetsMessage = "no tweets found"
+        $scope.message = "no tweets found"
       else
-        $scope.tweetsMessage = null
+        $scope.message = null
 
       $scope.tweets = data.data
 
@@ -53,7 +53,7 @@ function TwitterGetTweets($scope, search) {
     var message = "error getting tweets: " + textStatus + ": " + error
 
     $scope.timeout(function(){
-      $scope.tweetsMessage = message
+      $scope.message = message
     }, 10)
   }
 

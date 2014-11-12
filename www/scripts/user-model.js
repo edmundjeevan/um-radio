@@ -9,7 +9,7 @@ function UserModelGetUserModel($scope, text) {
     data:        JSON.stringify({data: text})
   }
 
-  $scope.scoresMessage = "loading scores"
+  $scope.message = "loading scores"
 
   // console.log("getting user model: " + JSON.stringify(options))
   $.ajax(url, options).
@@ -30,9 +30,9 @@ function UserModelGetUserModel($scope, text) {
 
     $scope.timeout(function(){
       if (scores.length == 0)
-        $scope.scoresMessage = "no scores available"
+        $scope.message = "no scores available"
       else
-        $scope.scoresMessage = null
+        $scope.message = null
 
       $scope.scores = scores
 
@@ -48,7 +48,7 @@ function UserModelGetUserModel($scope, text) {
     var message = "error getting user-model: " + textStatus + ": " + error
 
     $scope.timeout(function(){
-      $scope.scoresMessage = message
+      $scope.message = message
     }, 10)
   }
 
